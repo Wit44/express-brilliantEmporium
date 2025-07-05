@@ -12,6 +12,16 @@ WishlistRoute.get('/', async(req: any, res) => {
     }
 })
 
+//TESTING
+WishlistRoute.post('/', async(req: any, res) => {
+    try {
+        const { bookId } = req.body;
+        res.json(await WishlistService.createWishlist(req.user.id, bookId))
+    } catch (e) {
+        sendError(res, e)
+    }
+})
+
 WishlistRoute.get('/:id', async (req: any,res) => {
     try {
         const id = Number(req.params.id)

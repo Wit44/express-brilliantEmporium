@@ -8,6 +8,7 @@ import { BookRoute } from './routes/book.route'
 import { UserRoute } from './routes/user.route'
 import https from 'https'
 import fs from 'fs'
+import { WishlistRoute } from './routes/wishlist.route'
 
 
 const app = express()
@@ -19,6 +20,7 @@ app.use(morgan('tiny'))
 app.use(UserService.verifyToken)
 app.use('/api/book', BookRoute)
 app.use('/api/user', UserRoute)
+app.use('/api/wishlist', WishlistRoute)
 
 
 const sslOptions = {

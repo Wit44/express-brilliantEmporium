@@ -44,6 +44,24 @@ export class WishlistService {
         return data
     }
 
+    //TESTING
+    static async createWishlist(userId: number, bookId: number){
+        const existing = await repo.findOne({
+            where: {
+                userId,
+                bookId,
+                deletedAt: IsNull()
+            }
+        });
+
+        if (existing){
+            throw new Error("BOOK_ALREADY_IN_WISHLIST");
+        }
+        const wishlist = repo.create({ userId, bookId});
+        return await repo.save(wishlist);
+    }
+
+
     static async deleteWishlist(user: number, id: number) {
         const data = await this.getWishlistById(user, id)
         data.deletedAt = new Date()
