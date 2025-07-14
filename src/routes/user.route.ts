@@ -22,3 +22,11 @@ UserRoute.post('/refresh', async (req, res) => {
         sendError(res, e, 401)
     }
 })
+
+UserRoute.post('/register', async (req, res) => {
+    try {
+        res.json(await UserService.register(req.body))
+    } catch (e: any) {
+        sendError(res, e)
+    }
+})

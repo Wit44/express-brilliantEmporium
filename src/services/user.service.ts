@@ -5,6 +5,7 @@ import type { LoginModel } from "../models/login.model";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import type { Response } from "express";
+import type { RegisterModel } from "../models/register.model";
 
 
 
@@ -36,7 +37,7 @@ export class UserService {
     }
 
     static async verifyToken(req: any, res: Response, next: Function) {
-        const whitelist = ['/api/user/login', '/api/user/refresh']
+        const whitelist = ['/api/user/login', '/api/user/refresh', '/api/user/register']
 
         if (whitelist.includes(req.path)) {
             next()
@@ -96,5 +97,25 @@ export class UserService {
             throw new Error("USER_NOT_FOUND")
 
         return data
+    }
+
+
+    
+    static async register(model: RegisterModel){
+        const data = await repo.existsBy({
+            email:model.email,
+            deletedAt: IsNull()
+        });
+
+        if (data) {
+            throw new Error('USER_EXISTS');
+        }
+
+        const hashed = await bcrypt.hash(model.password, 12);
+        await repo.save({
+            email: model.email,
+            password: hashed,
+            name: model.name
+        })
     }
 }
