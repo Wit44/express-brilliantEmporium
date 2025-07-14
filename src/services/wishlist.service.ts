@@ -44,7 +44,6 @@ export class WishlistService {
         return data
     }
 
-    //TESTING
     static async createWishlist(userId: number, bookId: number){
         const existing = await repo.findOne({
             where: {

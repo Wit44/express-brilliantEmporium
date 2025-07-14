@@ -12,7 +12,6 @@ WishlistRoute.get('/', async(req: any, res) => {
     }
 })
 
-//TESTING
 WishlistRoute.post('/', async(req: any, res) => {
     try {
         const { bookId } = req.body;
